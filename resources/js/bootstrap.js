@@ -38,8 +38,9 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'local',
     encrypted: false,
+    // host: window.location.hostname + ':6001',
+    wsHost: window.location.hostname,
+    wsPort: 6001,
     disableStats: true,
-    host: window.location.hostname + ':6001'
-    // wsHost: window.location.hostname,
-    // wsPort: 6001,
+    forceTLS: false
 });
