@@ -9,9 +9,11 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import Vuex from 'vuex';
+
 Vue.use(Vuex);
 
 import VueObserveVisibility from 'vue-observe-visibility';
+
 Vue.use(VueObserveVisibility);
 
 Vue.prototype.$user = User;
@@ -46,3 +48,12 @@ const app = new Vue({
     el: '#app',
     store
 });
+
+Echo.channel('tweets')
+    .listen('.TweetLikesWereUpdated', (e) => {
+        store.commit('timeline/SET_LIKES', {
+            id: e.id,
+            count: e.count,
+            //you can just pass e with {}, since the name matches the params
+        });
+    })

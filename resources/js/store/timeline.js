@@ -21,6 +21,16 @@ export default {
                     return !state.tweets.map((t) => t.id).includes(tweet.id)
                 })
             );
+        },
+
+        SET_LIKES(state, {id, count}) {
+            state.tweets = state.tweets.map((t) => {
+                if (t.id === id) {
+                    t.likes_count = count;
+                }
+
+                return t;
+            })
         }
     },
 
@@ -29,7 +39,7 @@ export default {
             let response = await axios.get(url);
 
             commit('PUSH_TWEETS', response.data.data);
-            commit('likes/PUSH_LIKES', response.data.meta.likes, { root: true })
+            commit('likes/PUSH_LIKES', response.data.meta.likes, {root: true})
 
             return response;
         },
