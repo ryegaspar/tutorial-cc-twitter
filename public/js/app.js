@@ -2377,7 +2377,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    tweet: {
+      required: true,
+      type: Object
+    }
+  }
+});
 
 /***/ }),
 
@@ -45241,7 +45248,12 @@ var render = function() {
   return _c("ul", { staticClass: "flex mt-4" }, [
     _c("li", { staticClass: "w-3/12" }, [_c("app-tweet-reply-action")], 1),
     _vm._v(" "),
-    _c("li", { staticClass: "w-3/12" }, [_c("app-tweet-retweet-action")], 1),
+    _c(
+      "li",
+      { staticClass: "w-3/12" },
+      [_c("app-tweet-retweet-action", { attrs: { tweet: _vm.tweet } })],
+      1
+    ),
     _vm._v(" "),
     _c(
       "li",
@@ -45418,7 +45430,9 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("span", { staticClass: "text-gray-600" }, [_vm._v("0")])
+            _c("span", { staticClass: "text-gray-600" }, [
+              _vm._v(_vm._s(_vm.tweet.retweets_count))
+            ])
           ]
         )
       ]),
