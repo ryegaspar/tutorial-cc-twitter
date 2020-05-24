@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTweetsTable extends Migration
+class AddOriginalTweetIdToTweetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class CreateTweetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tweets', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->index();
-            $table->text('body')->nullable();
-            $table->timestamps();
+        Schema::table('tweets', function (Blueprint $table) {
+            $table->unsignedBigInteger('original_tweet_id')->index()->nullable();
 
-            $table->foreign('user_id')
+            $table->foreign('original_tweet_id')
                 ->references('id')
-                ->on('users')
+                ->on('tweets')
                 ->onDelete('cascade');
-
-
         });
     }
 
@@ -35,6 +30,8 @@ class CreateTweetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tweets');
+        Schema::table('tweets', function (Blueprint $table) {
+            $table->dropColumn('original_tweet_id');
+        });
     }
 }
