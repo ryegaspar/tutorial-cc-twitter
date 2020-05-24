@@ -15,11 +15,13 @@ class TimelineController extends Controller
 
     public function index(Request $request)
     {
-        $tweets = $request->user()
+        $tweets = $request
+            ->user()
             ->tweetsFromFollowing()
             ->latest()
             ->with([
-                'user'
+                'user',
+                'likes'
             ])
             ->paginate(5);
 
