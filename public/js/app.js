@@ -2032,7 +2032,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     body: {
@@ -45163,10 +45162,9 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("circle", {
-          staticClass: "stroke-current",
+          staticClass: "stroke-current text-blue-500",
           class: {
-            "text-red-500": _vm.percentageIsOver,
-            "text-blue-500": !_vm.percentageIsOver
+            "!text-red-500": _vm.percentageIsOver
           },
           attrs: {
             cx: "60",
