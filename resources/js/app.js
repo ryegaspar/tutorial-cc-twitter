@@ -63,3 +63,11 @@ Echo.channel('tweets')
             //you can just pass e with {}, since the name matches the params
         });
     })
+    .listen('.TweetRetweetsWereUpdated', (e) => {
+        if (e.user_id === User.id) {
+            store.dispatch('retweets/syncRetweet', e.id)
+        }
+
+        store.commit('timeline/SET_RETWEETS', e);
+    })
+
