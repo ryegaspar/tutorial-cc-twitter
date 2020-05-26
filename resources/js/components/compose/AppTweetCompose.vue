@@ -1,12 +1,18 @@
 <template>
     <form class="flex" @submit.prevent="submit">
-        <div class="mr-3">
-            <img :src="$user.avatar" class="w-12 rounded-full">
-        </div>
+        <img :src="$user.avatar" class="w-12 h-12 rounded-full mr-3">
         <div class="flex-grow">
             <app-tweet-compose-textarea v-model="form.body"/>
 
-            <span class="text-gray-600">{{ media }}</span>
+            <!--            <span class="text-gray-600">{{ media }}</span>-->
+
+            <app-tweet-image-preview :images="media.images"
+                                     v-if="media.images.length"
+            />
+
+            <app-tweet-video-preview :video="media.video"
+                                     v-if="media.video"
+            />
 
             <div class="flex justify-between">
                 <ul class="flex items-center">
@@ -69,7 +75,7 @@
             },
 
             handleMediaSelected(files) {
-                Array.from(files).slice(0,4).forEach(() => {
+                Array.from(files).slice(0, 4).forEach((file) => {
                     if (this.mediaTypes.image.includes(file.type)) {
                         this.media.images.push(file);
                     }
@@ -79,7 +85,7 @@
                     }
                 });
 
-                if(this.media.video) {
+                if (this.media.video) {
                     this.media.images = []
                 }
             }
