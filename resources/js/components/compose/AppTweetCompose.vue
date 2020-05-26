@@ -5,6 +5,9 @@
         </div>
         <div class="flex-grow">
             <app-tweet-compose-textarea v-model="form.body"/>
+
+            <span class="text-gray-600">{{ media }}</span>
+
             <div class="flex justify-between">
                 <ul class="flex items-center">
                     <li class="mr-4">
@@ -42,10 +45,13 @@
                     body: '',
                     media: []
                 },
+
                 media: {
                     images: [],
                     video: null
-                }
+                },
+
+                mediaTypes: {}
             }
         },
 
@@ -56,9 +62,31 @@
                 this.form.body = ''
             },
 
+            async getMediaTypes() {
+                let response = await axios.get('/api/media/types')
+
+                this.mediaTypes = response.data.data
+            },
+
             handleMediaSelected(files) {
-                console.log(files);
+                Array.from(files).slice(0,4).forEach(() => {
+                    if (this.mediaTypes.image.includes(file.type)) {
+                        this.media.images.push(file);
+                    }
+
+                    if (this.mediaTypes.video.includes(file.type)) {
+                        this.media.video = file;
+                    }
+                });
+
+                if(this.media.video) {
+                    this.media.images = []
+                }
             }
+        },
+
+        mounted() {
+            this.getMediaTypes();
         }
     }
 </script>
