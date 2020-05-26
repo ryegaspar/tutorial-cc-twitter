@@ -8,10 +8,12 @@
 
             <app-tweet-image-preview :images="media.images"
                                      v-if="media.images.length"
+                                     @removed="removeImage"
             />
 
             <app-tweet-video-preview :video="media.video"
                                      v-if="media.video"
+                                     @removed="removeVideo"
             />
 
             <div class="flex justify-between">
@@ -88,6 +90,16 @@
                 if (this.media.video) {
                     this.media.images = []
                 }
+            },
+
+            removeVideo() {
+                this.media.video = null
+            },
+
+            removeImage(image) {
+                this.media.images = this.media.images.filter((i) => {
+                    return image !== i
+                });
             }
         },
 
