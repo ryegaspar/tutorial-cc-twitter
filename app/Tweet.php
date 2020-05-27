@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Tweet extends Model
 {
@@ -31,5 +32,10 @@ class Tweet extends Model
     public function retweetedTweet()
     {
         return $this->hasOne(Tweet::class, 'original_tweet_id', 'id');
+    }
+
+    public function media()
+    {
+        return $this->hasMany(TweetMedia::class);
     }
 }
