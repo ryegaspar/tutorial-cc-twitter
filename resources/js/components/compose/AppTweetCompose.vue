@@ -4,7 +4,10 @@
         <div class="flex-grow">
             <app-tweet-compose-textarea v-model="form.body"/>
 
-            <!--            <span class="text-gray-600">{{ media }}</span>-->
+            <app-tweet-media-progress :progress="media.progress"
+                                      class="mb-4"
+                                      v-if="media.progress"
+            />
 
             <app-tweet-image-preview :images="media.images"
                                      v-if="media.images.length"
@@ -45,8 +48,10 @@
 
 <script>
     import axios from 'axios';
+    import AppTweetMediaProgress from "./media/AppTweetMediaProgress";
 
     export default {
+        components: {AppTweetMediaProgress},
         data() {
             return {
                 form: {
@@ -56,7 +61,8 @@
 
                 media: {
                     images: [],
-                    video: null
+                    video: null,
+                    progress: 0
                 },
 
                 mediaTypes: {}
@@ -65,8 +71,10 @@
 
         methods: {
             async submit() {
-                let media = await this.uploadMedia()
-                this.form.media = media.data.data.map(r => r.id);
+                if (this.media.images.length || this.media.video) {
+                    let media = await this.uploadMedia()
+                    this.form.media = media.data.data.map(r => r.id);
+                }
 
                 await axios.post('/api/tweets', this.form)
 
@@ -80,8 +88,19 @@
                 return await axios.post('/api/media', this.buildMediaForm(), {
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    }
+                    },
+                    onUploadProgress: this.handleUploadProgress
                 });
+            },
+
+            handleUploadProgress(event) {
+                this.media.progress = parseInt(Math.round((event.loaded / event.total) * 100))
+            },
+
+            async getMediaTypes() {
+                let response = await axios.get('/api/media/types')
+
+                this.mediaTypes = response.data.data
             },
 
             buildMediaForm() {
@@ -98,12 +117,6 @@
                 }
 
                 return form;
-            },
-
-            async getMediaTypes() {
-                let response = await axios.get('/api/media/types')
-
-                this.mediaTypes = response.data.data
             },
 
             handleMediaSelected(files) {
