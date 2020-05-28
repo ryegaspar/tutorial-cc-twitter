@@ -2,10 +2,10 @@
 
 namespace App;
 
+use App\Media\Media;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
 
 class TweetMedia extends Model implements HasMedia
 {
