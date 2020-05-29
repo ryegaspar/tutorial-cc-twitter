@@ -29,16 +29,32 @@
 
 <script>
     import compose from '../../mixins/compose';
-    import axios from "axios";
+    import {mapActions} from 'vuex';
 
     export default {
         mixins: [
             compose
         ],
 
+        props: {
+            tweet: {
+                required: true,
+                type: Object
+            }
+        },
+
         methods: {
+            ...mapActions({
+                quoteTweet: 'timeline/quoteTweet'
+            }),
+
             async post() {
-                // await axios.post('/api/tweets', this.form)
+                await this.quoteTweet({
+                    tweet: this.tweet,
+                    data: this.form
+                })
+
+                this.$emit('success')
             }
         }
     }

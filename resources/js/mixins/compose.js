@@ -95,4 +95,8 @@ export default {
             });
         }
     },
+
+    mounted() {
+        this.getMediaTypes();
+    }
 }

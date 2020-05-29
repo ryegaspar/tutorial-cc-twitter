@@ -1,6 +1,8 @@
 <template>
     <div>
         <app-tweet-retweet-compose
+            :tweet="tweet"
+            @success="$emit('close')"
         />
         <component
             v-if="tweet"
