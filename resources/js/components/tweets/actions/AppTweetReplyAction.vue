@@ -1,5 +1,8 @@
 <template>
-    <a href="#" class="flex items-center text-base">
+    <a href="#"
+       class="flex items-center text-base"
+       @click.prevent="$modal.show(AppTweetReplyModal, {tweet})"
+    >
         <svg xmlns="http://www.w3.org/2000/svg"
              viewBox="0 0 24 24"
              width="24"
@@ -14,11 +17,19 @@
 </template>
 
 <script>
+    import AppTweetReplyModal from "../../modals/AppTweetReplyModal";
+
     export default {
         props: {
             tweet: {
                 required: true,
                 type: Object
+            }
+        },
+
+        data() {
+            return {
+                AppTweetReplyModal
             }
         }
     }
