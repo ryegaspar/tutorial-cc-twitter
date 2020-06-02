@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="inline">
         <span class="text-gray-300 font-bold">{{ user.name }}</span> <span class="text-gray-600 font-normal">@{{ user.username }}</span>
     </div>
 </template>
