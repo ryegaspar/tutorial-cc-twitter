@@ -18,6 +18,7 @@ module.exports = {
     variants: {
         textColor: ['responsive', 'hover', 'focus', 'important'],
         backgroundColor: ['responsive', 'hover', 'focus', 'important'],
+        borderWidth: ['responsive', 'important'],
     },
     plugins: [
         plugin(function ({addVariant}) {
