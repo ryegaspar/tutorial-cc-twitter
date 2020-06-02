@@ -5,6 +5,7 @@ namespace App\Tweets\Entities;
 class EntityExtractor
 {
     const HASHTAG_REGEX = '/(?!\s)#([A-Za-z]\w*)\b/';
+    const MENTION_REGEX = '/(?=[^\w!])@(\w+)\b/';
 
     protected $string;
 
@@ -19,6 +20,19 @@ class EntityExtractor
             $this->match(self::HASHTAG_REGEX),
             'hashtag'
         );
+    }
+
+    public function getMentionEntities()
+    {
+        return $this->buildEntityCollection(
+            $this->match(self::MENTION_REGEX),
+            'mention'
+        );
+    }
+
+    public function getAllEntities()
+    {
+        return array_merge($this->getHashtagEntities(), $this->getMentionEntities());
     }
 
     protected function buildEntityCollection($entities, $type)
