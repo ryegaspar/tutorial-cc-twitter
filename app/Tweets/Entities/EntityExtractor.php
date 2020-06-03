@@ -18,7 +18,7 @@ class EntityExtractor
     {
         return $this->buildEntityCollection(
             $this->match(self::HASHTAG_REGEX),
-            'hashtag'
+            EntityType::HASHTAG
         );
     }
 
@@ -26,7 +26,7 @@ class EntityExtractor
     {
         return $this->buildEntityCollection(
             $this->match(self::MENTION_REGEX),
-            'mention'
+            EntityType::MENTION
         );
     }
 
